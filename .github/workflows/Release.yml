@@ -36,7 +36,7 @@ jobs:
         run: |
            # Commit the changes
            git config user.name "Andrzej Koziel"
-           git config user.email "andrzej.k@lsports.eu"
+           git config user.email "kozand.ak@gmail.com"
            git add RelaseVersion.json
            git commit -m "WORKFLOW COMMIT -- update RelaseVersion.json"
            git push origin main
