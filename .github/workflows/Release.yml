@@ -2,7 +2,7 @@ name: Update release version information file
 on:
   push:
     branches: 
-      - feat/TR-7675-Add-information-about-last-commit-to-web-legacy
+      - main
     
 jobs:
   save-commit:
@@ -39,4 +39,4 @@ jobs:
            git config user.email "andrzej.k@lsports.eu"
            git add RelaseVersion.json
            git commit -m "WORKFLOW COMMIT -- update RelaseVersion.json"
-           git push origin feat/TR-7675-Add-information-about-last-commit-to-web-legacy
+           git push origin main
