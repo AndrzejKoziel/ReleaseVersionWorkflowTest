@@ -1,0 +1,42 @@
+name: Update release version information file
+on:
+  push:
+    branches: 
+      - feat/TR-7675-Add-information-about-last-commit-to-web-legacy
+    
+jobs:
+  save-commit:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+            fetch-depth: 0
+           
+      - name: Update RelaseVersion.json file
+        run: |
+          # Get the current date and time in ISO 8601 format
+          merge_date=$(date -Iseconds)
+   
+          # Get the last commit message for the latest commit on main branch
+          commit_message=$(git log -1 --pretty=%B)
+   
+          # Get the latest commit hash
+          commit_hash=$(git log -1 --pretty=%H)
+   
+          # Update the RelaseVersion.json file
+          cat RelaseVersion.json | jq -n \
+          --arg date "$merge_date" \
+          --arg description "$commit_message" \
+          --arg hash "$commit_hash" \
+          '.MergeDate = $date | .Description = $description | .MergeHash = $hash' > RelaseVersion.json
+            
+      - name: Git Commit
+        run: |
+           # Commit the changes
+           git config user.name "Andrzej Koziel"
+           git config user.email "andrzej.k@lsports.eu"
+           git add RelaseVersion.json
+           git commit -m "WORKFLOW COMMIT -- update RelaseVersion.json"
+           git push origin feat/TR-7675-Add-information-about-last-commit-to-web-legacy
